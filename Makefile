@@ -572,7 +572,7 @@ docker-compose-build: awx-devel-build
 
 # Base development image build
 awx-devel-build:
-	docker build -t ansible/awx_devel --build-arg UID=$(shell id -u) -f tools/docker-compose/Dockerfile .
+	docker build -t ansible/awx_devel --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) -f tools/docker-compose/Dockerfile .
 	docker tag ansible/awx_devel $(DEV_DOCKER_TAG_BASE)/awx_devel:$(COMPOSE_TAG)
 	#docker push $(DEV_DOCKER_TAG_BASE)/awx_devel:$(COMPOSE_TAG)
 

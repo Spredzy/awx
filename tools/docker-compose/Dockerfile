@@ -1,6 +1,11 @@
 FROM centos:7
 
-ARG UID=0
+ARG UNAME=awx
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -b /var/lib -u $UID -g $GID -o -s /bin/bash $UNAME
+
 
 ADD Makefile /tmp/Makefile
 
@@ -57,7 +62,6 @@ RUN chmod +x /tini
 WORKDIR /
 EXPOSE 8043 8013 8080 22
 ENTRYPOINT ["/tini", "--"]
-CMD /start_development.sh
 
 RUN touch /venv/awx/lib/python2.7/site-packages/awx.egg-link
 RUN chmod g+rwx /venv/awx/lib/python2.7/site-packages/awx.egg-link
@@ -65,4 +69,5 @@ RUN chmod g+rwx /venv/awx/lib/python2.7/site-packages/awx.egg-link
 RUN chmod g+w /etc/passwd
 RUN mkdir -p /projects && chmod g+w /projects
 
-USER ${UID}
+USER ${UID}:${GID}
+CMD /start_development.sh
