@@ -146,7 +146,7 @@ spec:
             - >-
               yum install -y ansible curl python-setuptools epel-release \
                 openssl openssl-devel gcc python-devel &&
-              yum install -y python-virtualenv python36 python36-devel &&
+              yum install -y python-virtualenv python38 python38-devel &&
               mkdir -p {{ custom_venvs_path }} &&
 {% for custom_venv in custom_venvs %}
               virtualenv -p {{ custom_venv.python | default(custom_venvs_python) }} \
